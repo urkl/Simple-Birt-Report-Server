@@ -1,0 +1,168 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.urosk</groupId>
+    <artifactId>SimpleBirtReportServer</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>SimpleBirtReportServer</name>
+    <description>
+        Make birt reports run on web server simplier
+    </description>
+
+    <url>https://code.google.com/p/mifss/</url>
+
+
+    <developers>
+        <developer>
+            <name>Uroš Kristan</name>
+            <id>uroš</id>
+            <email>uros.kristan@gmail.com</email>
+        </developer>
+        <developer>
+            <name>Jernej Švigelj</name>
+            <id>jernej</id>
+            <email>jernej.svigelj@gmail.com</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+
+    <properties>
+        <springVersion>4.1.6.RELEASE</springVersion>
+        <birtVersion>4.4.2</birtVersion>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mavenSureFireVersion>2.16</mavenSureFireVersion>
+        <java.version>1.7</java.version>
+        <maven.build.timestamp.format>yy/MM/dd_HH:mm</maven.build.timestamp.format>
+        <build.timestamp>${maven.build.timestamp}</build.timestamp>
+
+
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.eclipse.birt.runtime</groupId>
+            <artifactId>org.eclipse.birt.runtime</artifactId>
+            <version>${birtVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
+
+    </dependencies>
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+                    <packagingExcludes>**/*.xml</packagingExcludes>
+                    <archive>
+                        <manifestEntries>
+                            <Build-Jdk>${java.version}</Build-Jdk>
+                            <Specification-Title>Simple Birt Server</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Implementation-Version>${build.number}</Implementation-Version>
+                            <Built-By>Uros Kristan and Jernej Svigelj | Urosk.NET</Built-By>
+                            <Build-Date>${build.timestamp}</Build-Date>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
+</project>
