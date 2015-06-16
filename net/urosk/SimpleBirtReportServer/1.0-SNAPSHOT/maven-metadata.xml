@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>net.urosk</groupId>
+  <artifactId>SimpleBirtReportServer</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20150616.101835</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20150616101835</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>war</extension>
+        <value>1.0-20150616.101835-1</value>
+        <updated>20150616101835</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.0-20150616.101835-1</value>
+        <updated>20150616101835</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
