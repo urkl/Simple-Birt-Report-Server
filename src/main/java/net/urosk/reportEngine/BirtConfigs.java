@@ -46,7 +46,6 @@ import java.util.logging.Level;
 @Component
 public class BirtConfigs {
 
-
     private static Logger logger = Logger.getLogger(BirtConfigs.class);
     @Value("${logFolder}")
     String logFolder;
@@ -77,10 +76,8 @@ public class BirtConfigs {
         this.resourcesFolder = resourcesFolder;
     }
 
-
     @PreDestroy
     public void destroyEngine() {
-
 
         if (reportEngine != null)
             reportEngine.destroy();
@@ -152,7 +149,6 @@ public class BirtConfigs {
 
     }
 
-
     public void printOutProperties() throws Exception {
 
         final BeanWrapper wrapper = new BeanWrapperImpl(this);
@@ -196,7 +192,6 @@ public class BirtConfigs {
             logger.error(msg);
             throw new Exception(msg);
         }
-
 
     }
 

@@ -45,8 +45,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-
-@Component("annotatedServletHandler")
+@Component("reportsServlet")
 public class ReportsServlet implements HttpRequestHandler {
 
     private static Logger logger = Logger.getLogger(ReportsServlet.class);
@@ -54,12 +53,35 @@ public class ReportsServlet implements HttpRequestHandler {
     @Autowired
     private BirtReportEngine birtReportEngine;
 
+    private boolean isEmpty(String in) {
+        return (in == null || "".equals(in));
+    }
+
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String reportDesign = request.getParameter("__report");
         String type = request.getParameter("__format");
         String outputFilename = request.getParameter("__filename");
+        String attachment = request.getParameter("attachment");
 
+        //check parameters
+        StringBuffer msg = new StringBuffer();
+
+        // checkers
+        if (isEmpty(reportDesign)) {
+            msg.append("<BR>__report can not be empty");
+        }
+
+        try {
+            OutputType.valueOf(type.toUpperCase());
+        } catch (Exception e) {
+            msg.append("Undefined report __format: " + type + ". Set __format=PDF , __format=XLS , __format=HTML ");
+        }
+
+        // checkers
+        if (isEmpty(outputFilename)) {
+            msg.append("<BR>__filename can not be empty");
+        }
 
         try {
 
@@ -68,11 +90,10 @@ public class ReportsServlet implements HttpRequestHandler {
 
             OutputType outputType = null;
 
-            try {
-                outputType = OutputType.valueOf(type.toUpperCase());
-            } catch (Exception e) {
-                logger.error("Undefined report type: " + type);
-                out.print("type ni definiran za: " + type);
+            // output error
+            if (msg.toString() != null) {
+                out.print(msg.toString());
+                return;
             }
 
             ReportDef def = new ReportDef();
@@ -84,8 +105,8 @@ public class ReportsServlet implements HttpRequestHandler {
             Iterator<String> i = params.keySet().iterator();
 
             while (i.hasNext()) {
-                String key = (String) i.next();
-                String value = ((String[]) params.get(key))[0];
+                String key = i.next();
+                String value = params.get(key)[0];
                 def.getParameters().put(key, value);
             }
 
@@ -97,9 +118,11 @@ public class ReportsServlet implements HttpRequestHandler {
 
                 String mimetype = context.getMimeType(file.getAbsolutePath());
 
+                String inlineOrAttachment = (attachment != null) ? "attachment" : "inline";
+
                 response.setContentType((mimetype != null) ? mimetype : "application/octet-stream");
                 response.setContentLength((int) file.length());
-                response.setHeader("Content-Disposition", "inline; filename=\"" + outputFilename + "\"");
+                response.setHeader("Content-Disposition", inlineOrAttachment + "; filename=\"" + outputFilename + "\"");
 
                 DataInputStream in = new DataInputStream(new FileInputStream(file));
 
@@ -126,7 +149,6 @@ public class ReportsServlet implements HttpRequestHandler {
 
             logger.error(e, e);
         } finally {
-
 
         }
 

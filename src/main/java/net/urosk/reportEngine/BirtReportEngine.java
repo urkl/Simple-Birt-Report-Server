@@ -26,10 +26,7 @@
 
 package net.urosk.reportEngine;
 
-import net.urosk.reportEngine.lib.FilesDeletingTread;
-import net.urosk.reportEngine.lib.ReportDef;
-import net.urosk.reportEngine.lib.ReportEngineException;
-import net.urosk.reportEngine.lib.Utils;
+import net.urosk.reportEngine.lib.*;
 import org.apache.log4j.Logger;
 import org.eclipse.birt.report.engine.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +42,11 @@ public class BirtReportEngine {
 
     private final static Logger logger = Logger.getLogger(BirtReportEngine.class);
 
-    private static Integer counter = 0;
-
-
     @Autowired
     private BirtConfigs birtConfig;
 
+    @Autowired
+    private ReportCounter reportCounter;
 
     @SuppressWarnings("unchecked")
     public String createReport(ReportDef reportDef) throws ReportEngineException {
@@ -80,27 +76,24 @@ public class BirtReportEngine {
 
         task.setParameterValues(reportDef.getParameters());
 
-
         try {
-
 
             task.run();
 
             generatedReportFile = task.getRenderOption().getOutputFileName();
 
-            logger.info("generatedReport: " + generatedReportFile);
+            reportCounter.onReportcreated();
 
+            logger.info("generatedReport: " + generatedReportFile + ", report count created after uptime: " + reportCounter.getReportsCreated());
 
-            if (counter > 100) {
+            if (reportCounter.getReportsCreated() % 100 == 0) {
                 try {
                     new FilesDeletingTread(birtConfig.getOutputFolder(), birtConfig.getDeleteTempFilesAfterDays());
                 } catch (Exception e) {
                     logger.warn("Deleting thread has problems..", e);
                 }
-                counter = 0;
-            }
-            counter++;
 
+            }
 
         } catch (EngineException e) {
 
@@ -119,6 +112,5 @@ public class BirtReportEngine {
         return generatedReportFile;
 
     }
-
 
 }
