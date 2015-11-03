@@ -190,7 +190,7 @@
 
                     <attachClasses>true</attachClasses>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <packagingExcludes>**/*.xml, **/*.properties</packagingExcludes>
+                    <packagingExcludes>**/*.xml, **/*.properties, **/*.gitignore</packagingExcludes>
                     <archive>
                         <manifestEntries>
                             <Build-Jdk>${java.version}</Build-Jdk>
@@ -230,6 +230,7 @@
                     <excludes>
                         <exclude>**/*.xml</exclude>
                         <exclude>**/*.properties</exclude>
+                        <exclude>**/*.gitignore</exclude>
                     </excludes>
                 </configuration>
 
