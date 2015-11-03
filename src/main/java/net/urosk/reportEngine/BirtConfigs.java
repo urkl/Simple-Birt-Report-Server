@@ -26,6 +26,7 @@
 
 package net.urosk.reportEngine;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
@@ -146,7 +147,8 @@ public class BirtConfigs {
         config.setEngineHome(birtEngineHome);
         config.setResourcePath(resourcesFolder);
         config.setLogConfig(logFolder, Level.WARNING);
-        if (fontsConfig != null)
+
+        if (StringUtils.isNotEmpty(fontsConfig))
             config.setFontConfig(new URL(fontsConfig));
 
         try {
