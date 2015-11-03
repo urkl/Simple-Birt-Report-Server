@@ -153,7 +153,9 @@ public class BirtConfigs {
 
         EngineConfig config = new EngineConfig();
 
-        config.setEngineHome(birtEngineHome);
+        if (StringUtils.isNotEmpty(birtEngineHome)) {
+            config.setEngineHome(birtEngineHome);
+        }
         config.setResourcePath(resourcesFolder);
         config.setLogConfig(logFolder, Level.WARNING);
 
