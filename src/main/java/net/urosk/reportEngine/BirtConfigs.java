@@ -49,28 +49,37 @@ import java.util.logging.Level;
 public class BirtConfigs {
 
     private static Logger logger = Logger.getLogger(BirtConfigs.class);
+
     @Value("${logFolder}")
     String logFolder;
+
     @Value("${workspaceFolder}")
     String workspaceFolder;
+
     private
     @Value("${birtEngineHome}")
     String birtEngineHome;
+
     private
     @Value("${deleteTempFilesAfterDays}")
     int deleteTempFilesAfterDays = 1;
+
     private
     @Value("${outputFolder}")
     String outputFolder;
+
     private
     @Value("${reportDesignHome}")
     String reportDesignHome;
+
     private
     @Value("${resourcesFolder}")
     String resourcesFolder;
-    private IReportEngine reportEngine;
+
     @Value("${fontsConfig}")
     private String fontsConfig;
+
+    private IReportEngine reportEngine;
 
     public String getFontsConfig() {
         return fontsConfig;
@@ -148,8 +157,9 @@ public class BirtConfigs {
         config.setResourcePath(resourcesFolder);
         config.setLogConfig(logFolder, Level.WARNING);
 
-        if (StringUtils.isNotEmpty(fontsConfig))
+        if (StringUtils.isNotEmpty(fontsConfig)) {
             config.setFontConfig(new URL(fontsConfig));
+        }
 
         try {
 
@@ -189,7 +199,7 @@ public class BirtConfigs {
         if (!new File(birtEngineHome).isDirectory()) {
             String msg = "Error path doesn't exists birtEngineHome: " + birtEngineHome;
             logger.error(msg);
-            throw new Exception(msg);
+            // throw new Exception(msg);
         }
 
         if (!new File(outputFolder).exists()) {

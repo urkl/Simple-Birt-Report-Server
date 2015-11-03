@@ -59,8 +59,13 @@ public class BirtReportEngine {
         IReportEngine engine = birtConfig.getReportEngine();
 
         try {
-            design = engine.openReportDesign(birtConfig.getReportDesignHome() + File.separator + reportDef.getDesignFileName());
+            String reportDesignPath = birtConfig.getReportDesignHome() + File.separator + reportDef.getDesignFileName();
+            logger.info("starting report design: " + reportDesignPath);
+
+            design = engine.openReportDesign(reportDesignPath);
+
         } catch (EngineException e) {
+            logger.error(e, e);
             throw new ReportEngineException(e.toString(), e);
         }
 
@@ -95,7 +100,7 @@ public class BirtReportEngine {
 
             }
 
-        } catch (EngineException e) {
+        } catch (Exception e) {
 
             logger.error(e, e);
             throw new ReportEngineException(e.toString(), e);
