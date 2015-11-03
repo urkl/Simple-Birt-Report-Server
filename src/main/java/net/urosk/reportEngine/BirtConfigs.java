@@ -41,6 +41,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.beans.PropertyDescriptor;
 import java.io.File;
+import java.net.URL;
 import java.util.logging.Level;
 
 @Component
@@ -67,6 +68,16 @@ public class BirtConfigs {
     @Value("${resourcesFolder}")
     String resourcesFolder;
     private IReportEngine reportEngine;
+    @Value("${fontsConfig}")
+    private String fontsConfig;
+
+    public String getFontsConfig() {
+        return fontsConfig;
+    }
+
+    public void setFontsConfig(String fontsConfig) {
+        this.fontsConfig = fontsConfig;
+    }
 
     public String getResourcesFolder() {
         return resourcesFolder;
@@ -135,6 +146,8 @@ public class BirtConfigs {
         config.setEngineHome(birtEngineHome);
         config.setResourcePath(resourcesFolder);
         config.setLogConfig(logFolder, Level.WARNING);
+        if (fontsConfig != null)
+            config.setFontConfig(new URL(fontsConfig));
 
         try {
 
@@ -160,35 +173,35 @@ public class BirtConfigs {
     public void checkConfigs() throws Exception {
 
         if (!new File(workspaceFolder).isDirectory()) {
-            String msg = "Error path doesnt exists workspaceFolder: " + workspaceFolder;
+            String msg = "Error path doesn't exists workspaceFolder: " + workspaceFolder;
             logger.error(msg);
             throw new Exception(msg);
         }
 
         if (!new File(logFolder).isDirectory()) {
-            String msg = "Error path doesnt exists logFolder: " + logFolder;
+            String msg = "Error path doesn't exists logFolder: " + logFolder;
             logger.error(msg);
             throw new Exception(msg);
         }
 
         if (!new File(birtEngineHome).isDirectory()) {
-            String msg = "Error path doesnt exists birtEngineHome: " + birtEngineHome;
+            String msg = "Error path doesn't exists birtEngineHome: " + birtEngineHome;
             logger.error(msg);
             throw new Exception(msg);
         }
 
         if (!new File(outputFolder).exists()) {
-            String msg = "Error path doesnt exists outputFolder: " + outputFolder;
+            String msg = "Error path doesn't exists outputFolder: " + outputFolder;
             logger.error(msg);
             throw new Exception(msg);
         }
         if (!new File(reportDesignHome).exists()) {
-            String msg = "Error path doesnt exists reportDesignHome: " + reportDesignHome;
+            String msg = "Error path doesn't exists reportDesignHome: " + reportDesignHome;
             logger.error(msg);
             throw new Exception(msg);
         }
         if (!new File(resourcesFolder).exists()) {
-            String msg = "Error path doesnt exists resourcesFolder: " + resourcesFolder;
+            String msg = "Error path doesn't exists resourcesFolder: " + resourcesFolder;
             logger.error(msg);
             throw new Exception(msg);
         }

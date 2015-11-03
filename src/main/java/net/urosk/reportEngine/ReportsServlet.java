@@ -75,7 +75,7 @@ public class ReportsServlet implements HttpRequestHandler {
         try {
             OutputType.valueOf(type.toUpperCase());
         } catch (Exception e) {
-            msg.append("Undefined report __format: " + type + ". Set __format=PDF , __format=XLS , __format=HTML ");
+            msg.append("Undefined report __format: " + type + ". Set __format=" + OutputType.values());
         }
 
         // checkers
@@ -135,9 +135,9 @@ public class ReportsServlet implements HttpRequestHandler {
                 in.close();
 
             } catch (Exception e) {
-                out.print(e.getMessage());
-                logger.error(e, e);
 
+                logger.error(e, e);
+                out.print(e.getMessage());
             } finally {
                 out.flush();
                 out.close();
@@ -146,8 +146,8 @@ public class ReportsServlet implements HttpRequestHandler {
             logger.info("Free memory: " + (Runtime.getRuntime().freeMemory() / 1024L * 1024L));
 
         } catch (Exception e) {
-
             logger.error(e, e);
+
         } finally {
 
         }
