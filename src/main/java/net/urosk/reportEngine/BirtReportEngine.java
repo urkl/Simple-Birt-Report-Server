@@ -59,7 +59,9 @@ public class BirtReportEngine {
         IReportEngine engine = birtConfig.getReportEngine();
 
         try {
+
             String reportDesignPath = birtConfig.getReportDesignHome() + File.separator + reportDef.getDesignFileName();
+
             logger.info("starting report design: " + reportDesignPath);
 
             design = engine.openReportDesign(reportDesignPath);
