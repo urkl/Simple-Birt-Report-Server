@@ -134,7 +134,7 @@ public class ReportEngineTest implements ApplicationContextAware {
     @Test
     public void reportTest() throws ReportEngineException {
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
 
             ReportDef reportDef = new ReportDef();
             reportDef.setDesignFileName(testReport);

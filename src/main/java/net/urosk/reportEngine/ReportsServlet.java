@@ -28,6 +28,7 @@ package net.urosk.reportEngine;
 
 import net.urosk.reportEngine.lib.OutputType;
 import net.urosk.reportEngine.lib.ReportDef;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -72,8 +73,10 @@ public class ReportsServlet implements HttpRequestHandler {
             msg.append("<BR>__report can not be empty");
         }
 
+        OutputType outputType = null;
+
         try {
-            OutputType.valueOf(type.toUpperCase());
+            outputType = OutputType.valueOf(type.toUpperCase());
         } catch (Exception e) {
             msg.append("Undefined report __format: " + type + ". Set __format=" + OutputType.values());
         }
@@ -88,10 +91,10 @@ public class ReportsServlet implements HttpRequestHandler {
             ServletOutputStream out = response.getOutputStream();
             ServletContext context = request.getSession().getServletContext();
 
-            OutputType outputType = null;
+
 
             // output error
-            if (msg.toString() != null) {
+            if (StringUtils.isNotEmpty(msg.toString())) {
                 out.print(msg.toString());
                 return;
             }
